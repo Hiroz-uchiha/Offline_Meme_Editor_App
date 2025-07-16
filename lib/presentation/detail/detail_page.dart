@@ -2,15 +2,22 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:meme_editor_app_offline_first_flutter_application/presentation/export/export_page.dart';
 import 'package:provider/provider.dart';
-
+import '../../core/di/injection.dart'; // pastikan path benar
 import 'editor_controller.dart';
 import 'editor_item.dart';
 import 'widgets/meme_canvas.dart';
 
 class DetailPage extends StatefulWidget {
   final String imageUrl;
-  const DetailPage({super.key, required this.imageUrl});
+  final AppDependencies appDependencies;
+
+  const DetailPage({
+    super.key,
+    required this.imageUrl,
+    required this.appDependencies,
+  });
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -18,7 +25,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   final GlobalKey repaintKey = GlobalKey();
-  final GlobalKey canvasKey = GlobalKey(); // key untuk container canvas
+  final GlobalKey canvasKey = GlobalKey();
   bool isFabOpen = false;
 
   Future<Uint8List?> captureImage() async {
@@ -44,15 +51,12 @@ class _DetailPageState extends State<DetailPage> {
           controller: controller,
           autofocus: true,
           maxLines: null,
-          decoration: const InputDecoration(
-            hintText: 'Enter your text',
-          ),
+          decoration: const InputDecoration(hintText: 'Enter your text'),
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () {
               final text = controller.text.trim();
@@ -91,26 +95,57 @@ class _DetailPageState extends State<DetailPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: RepaintBoundary(
-              key: repaintKey,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: MemeCanvas(
-                  imageUrl: widget.imageUrl,
-                  items: prov.items,
-                  containerKey: canvasKey,
-                  onTextTap: (index) {
-                    // kalau teks di canvas di tap, edit teks
-                    _showAddTextDialog(
-                      initialText: prov.items[index].content,
-                      editIndex: index,
-                    );
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              RepaintBoundary(
+                key: repaintKey,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: MemeCanvas(
+                    imageUrl: widget.imageUrl,
+                    items: prov.items,
+                    containerKey: canvasKey,
+                    onTextTap: (index) {
+                      _showAddTextDialog(
+                        initialText: prov.items[index].content,
+                        editIndex: index,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.upload),
+                  label: const Text("Export"),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                  ),
+                  onPressed: () async {
+                    final imageBytes = await captureImage();
+                    if (imageBytes != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ExportPage(
+                            imageBytes: imageBytes,
+                            appDependencies: widget.appDependencies,
+                          ),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Gagal menangkap gambar")),
+                      );
+                    }
                   },
                 ),
               ),
-            ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),
@@ -125,9 +160,7 @@ class _DetailPageState extends State<DetailPage> {
                 heroTag: 'add_text',
                 onPressed: () {
                   _showAddTextDialog();
-                  setState(() {
-                    isFabOpen = false;
-                  });
+                  setState(() => isFabOpen = false);
                 },
                 label: const Text("Add Text"),
                 icon: const Icon(Icons.text_fields),
@@ -142,9 +175,7 @@ class _DetailPageState extends State<DetailPage> {
                     position: const Offset(100, 100),
                   );
                   prov.addItem(newItem);
-                  setState(() {
-                    isFabOpen = false;
-                  });
+                  setState(() => isFabOpen = false);
                 },
                 label: const Text("Add Sticker"),
                 icon: const Icon(Icons.emoji_emotions),
@@ -153,11 +184,7 @@ class _DetailPageState extends State<DetailPage> {
             ],
             FloatingActionButton(
               heroTag: 'toggle_fab',
-              onPressed: () {
-                setState(() {
-                  isFabOpen = !isFabOpen;
-                });
-              },
+              onPressed: () => setState(() => isFabOpen = !isFabOpen),
               child: Icon(isFabOpen ? Icons.close : Icons.add),
             ),
           ],

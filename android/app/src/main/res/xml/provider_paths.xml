@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Ini untuk mengizinkan akses ke direktori cache aplikasi -->
+    <cache-path name="cache" path="."/>
+    <!-- Ini untuk mengizinkan akses ke file yang kamu simpan di external storage -->
+    <external-path name="external_files" path="."/>
+</paths>

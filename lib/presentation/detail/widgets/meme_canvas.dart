@@ -23,7 +23,7 @@ class MemeCanvas extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Container(
           key: containerKey,
-          height: 1000,
+          height: 500,
           child: Stack(
             children: [
               Positioned(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meme_editor_app_offline_first_flutter_application/core/di/injection.dart';
+import 'package:meme_editor_app_offline_first_flutter_application/presentation/common/themeprov.dart';
 import 'package:meme_editor_app_offline_first_flutter_application/presentation/detail/editor_controller.dart';
 import 'package:meme_editor_app_offline_first_flutter_application/presentation/export/widgets/export_controller.dart';
 import 'package:meme_editor_app_offline_first_flutter_application/presentation/home/home_page.dart';
@@ -27,20 +28,39 @@ class MyApp extends StatelessWidget {
           create: (_) => HomeProvider(usecase.getMemes)..loadMemes(),
         ),
         ChangeNotifierProvider(
-            create: (_) => ExportController(
-                saveImage: usecase.saveImage, shareImage: usecase.shareImage)),
+          create: (_) => ExportController(
+            saveImage: usecase.saveImage,
+            shareImage: usecase.shareImage,
+            requestPermission: usecase.requestStoragePermission,
+          ),
+        ),
         ChangeNotifierProvider(
           create: (_) => EditorController(),
         ),
+        ChangeNotifierProvider(
+            create: (_) => ThemeProvider(usecase.themeUseCase)..loadTheme()),
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const HomePage(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProv, _) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.blueGrey,
+                brightness: Brightness.dark,
+              ),
+              useMaterial3: true,
+            ),
+            themeMode: themeProv.themeMode,
+            home: HomePage(
+                appDependencies: usecase), // <-- kirim usecase ke HomePage
+          );
+        },
       ),
     );
   }

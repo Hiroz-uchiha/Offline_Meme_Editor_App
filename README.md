@@ -23,7 +23,7 @@ Follow these steps to run the app locally on your machine:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Dustymon111/offline-meme-editor.git
+git clone https://github.com/Hiroz-uchiha/Offline_Meme_Editor_App.git
 cd offline-meme-editor
 
 

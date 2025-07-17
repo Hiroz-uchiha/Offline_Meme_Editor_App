@@ -42,3 +42,14 @@ flutter pub run build_runner build
 ```bash
 flutter run
 ```
+
+### 5. Run Unit Test
+```bash
+flutter test
+```
+
+### 6. Build APK
+```bash
+flutter build apk
+```
+

@@ -1,6 +1,6 @@
 # 🖼️ Offline Meme Editor App
 
-Meme is a Flutter app built on clean architecture. The app supports both offline and online functionality, with Hive as local storage and Dio for data access from remote APIs.
+Meme Editor App is a Flutter app built on clean architecture. The app supports both offline and online functionality, with Hive as local storage and Dio for data access from remote APIs.
 
 ---
 

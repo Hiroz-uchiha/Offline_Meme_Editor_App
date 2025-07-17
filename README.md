@@ -1,6 +1,6 @@
 # 🖼️ Offline Meme Editor
 
-A Flutter application to create, edit, and save memes offline using clean architecture. It supports offline-first functionality using Hive for local storage and Dio for remote API access.
+Meme is a Flutter app built on clean architecture. The app supports both offline and online functionality, with Hive as local storage and Dio for data access from remote APIs.
 
 ---
 
@@ -25,3 +25,5 @@ Follow these steps to run the app locally on your machine:
 ```bash
 git clone https://github.com/Dustymon111/offline-meme-editor.git
 cd offline-meme-editor
+
+

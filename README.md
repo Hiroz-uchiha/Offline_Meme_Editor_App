@@ -19,23 +19,22 @@ Meme is a Flutter app built on clean architecture. The app supports both offline
 
 To get started with the project, follow these steps:
 
+### 1. Clone the repository
 ```bash
-# 1. Clone the repository
 git clone https://github.com/Hiroz-uchiha/Offline_Meme_Editor_App.git
+```
+```bash
 cd Offline_Meme_Editor_App
+```
 
-# 2. Install dependencies
+### 2. Install dependencies
+```bash
 flutter pub get
+```
 
-# 3. Generate necessary files using build_runner
-#    - Hive type adapters (for local caching)
-#    - Mockito mocks (for unit testing)
-flutter pub run build_runner build
-# If there are conflicting outputs, run:
-flutter pub run build_runner build --delete-conflicting-outputs
+### 3. Generate Necessary Files
+This project uses build_runner to generate:
 
-# 4. (Optional) Check Android SDK version
-#    Make sure android/app/build.gradle contains:
-#    compileSdkVersion 35
-#    targetSdkVersion 35
-#    minSdkVersion 21
+Hive type adapters for local caching
+
+Mockito mocks for unit testing

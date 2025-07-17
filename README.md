@@ -53,3 +53,13 @@ flutter test
 flutter build apk
 ```
 
+
+### 7. Project Structure
+```bash
+lib/
+├── core/           # Core utilities, errors, network, dependency injection
+├── data/           # Data sources, models, repositories
+├── domain/         # Entities, repositories, use cases
+├── presentation/   # UI pages, controllers, widgets
+├── main.dart
+```

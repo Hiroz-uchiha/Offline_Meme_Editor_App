@@ -14,6 +14,8 @@ void main() {
     final mockGetMemes = MockGetMemes();
     final mockSaveImage = MockSaveImageUsecase();
     final mockShareImage = MockShareImageUsecase();
+    final mockThemeUseCase = MockThemeUseCase();
+    final mockPermissionUseCase = MockRequestStoragePermissionUseCase();
 
     when(mockGetMemes.call()).thenAnswer((_) async => [
           MemeEntity(
@@ -31,6 +33,8 @@ void main() {
       getMemes: mockGetMemes,
       saveImage: mockSaveImage,
       shareImage: mockShareImage,
+      themeUseCase: mockThemeUseCase,
+      requestStoragePermission: mockPermissionUseCase,
     );
 
     await tester.pumpWidget(MyApp(mockDeps));

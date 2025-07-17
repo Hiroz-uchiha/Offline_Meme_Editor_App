@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class DragItem extends StatelessWidget {
   final EditorItem item;
   final int index;
-  final GlobalKey parentKey; // key container parent (canvas)
+  final GlobalKey parentKey;
   final Function(int index)? onTextTap;
 
   const DragItem({

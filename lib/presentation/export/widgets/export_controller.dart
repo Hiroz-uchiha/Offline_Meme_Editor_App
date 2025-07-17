@@ -18,7 +18,7 @@ class ExportController extends ChangeNotifier {
   Future<void> exportToGallery(
       Uint8List imageBytes, BuildContext context) async {
     try {
-      // Request permission storage dulu
+      // Request permission storage
       final permissionGranted = await requestPermission();
       if (!permissionGranted) {
         if (!context.mounted) return;
@@ -28,7 +28,7 @@ class ExportController extends ChangeNotifier {
         return;
       }
 
-      // Simpan gambarnya
+      // Simpan gambar
       final success = await saveImage(imageBytes);
 
       if (!context.mounted) return;

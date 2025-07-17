@@ -4,18 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:meme_editor_app_offline_first_flutter_application/presentation/export/export_page.dart';
 import 'package:provider/provider.dart';
-import '../../core/di/injection.dart'; // pastikan path benar
+import '../../core/di/injection.dart';
 import 'editor_controller.dart';
 import 'editor_item.dart';
 import 'widgets/meme_canvas.dart';
 
 class DetailPage extends StatefulWidget {
   final String imageUrl;
+  final bool isOffline;
   final AppDependencies appDependencies;
 
   const DetailPage({
     super.key,
     required this.imageUrl,
+    required this.isOffline,
     required this.appDependencies,
   });
 
@@ -104,6 +106,7 @@ class _DetailPageState extends State<DetailPage> {
                   alignment: Alignment.topCenter,
                   child: MemeCanvas(
                     imageUrl: widget.imageUrl,
+                    isOffline: widget.isOffline,
                     items: prov.items,
                     containerKey: canvasKey,
                     onTextTap: (index) {

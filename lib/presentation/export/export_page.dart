@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/di/injection.dart'; // path AppDependencies
+import '../../core/di/injection.dart';
 import 'widgets/export_controller.dart';
 
 class ExportPage extends StatelessWidget {

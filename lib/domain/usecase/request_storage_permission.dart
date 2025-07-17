@@ -10,8 +10,8 @@ class RequestStoragePermissionUseCase {
 
     // Minta izin
     final result = await [
-      Permission.photos, // Android 13+
-      Permission.storage, // Android <13
+      Permission.photos,
+      Permission.storage,
     ].request();
 
     return result[Permission.photos]?.isGranted == true ||

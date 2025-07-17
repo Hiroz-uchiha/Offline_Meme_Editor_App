@@ -57,8 +57,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
             ),
             themeMode: themeProv.themeMode,
-            home: HomePage(
-                appDependencies: usecase), // <-- kirim usecase ke HomePage
+            home: HomePage(appDependencies: usecase),
           );
         },
       ),

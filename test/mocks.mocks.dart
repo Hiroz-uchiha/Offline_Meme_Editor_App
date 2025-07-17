@@ -3,21 +3,29 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
-import 'dart:typed_data' as _i8;
+import 'dart:async' as _i6;
+import 'dart:typed_data' as _i9;
 
 import 'package:meme_editor_app_offline_first_flutter_application/data/repo/meme_repository_impl.dart'
     as _i3;
 import 'package:meme_editor_app_offline_first_flutter_application/domain/entities/meme.dart'
-    as _i6;
+    as _i7;
+import 'package:meme_editor_app_offline_first_flutter_application/domain/entities/theme_entity.dart'
+    as _i12;
 import 'package:meme_editor_app_offline_first_flutter_application/domain/repo/meme_repository.dart'
     as _i2;
-import 'package:meme_editor_app_offline_first_flutter_application/domain/usecase/get_memes.dart'
+import 'package:meme_editor_app_offline_first_flutter_application/domain/repo/theme_repository.dart'
     as _i4;
+import 'package:meme_editor_app_offline_first_flutter_application/domain/usecase/get_memes.dart'
+    as _i5;
+import 'package:meme_editor_app_offline_first_flutter_application/domain/usecase/request_storage_permission.dart'
+    as _i13;
 import 'package:meme_editor_app_offline_first_flutter_application/domain/usecase/save_image_usecase.dart'
-    as _i7;
+    as _i8;
 import 'package:meme_editor_app_offline_first_flutter_application/domain/usecase/share_image_usecase.dart'
-    as _i9;
+    as _i10;
+import 'package:meme_editor_app_offline_first_flutter_application/domain/usecase/theme_usecase.dart'
+    as _i11;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -55,10 +63,21 @@ class _FakeMemeRepositoryImpl_1 extends _i1.SmartFake
         );
 }
 
+class _FakeThemeRepository_2 extends _i1.SmartFake
+    implements _i4.ThemeRepository {
+  _FakeThemeRepository_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [GetMemes].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetMemes extends _i1.Mock implements _i4.GetMemes {
+class MockGetMemes extends _i1.Mock implements _i5.GetMemes {
   MockGetMemes() {
     _i1.throwOnMissingStub(this);
   }
@@ -73,21 +92,21 @@ class MockGetMemes extends _i1.Mock implements _i4.GetMemes {
       ) as _i2.MemeRepository);
 
   @override
-  _i5.Future<List<_i6.MemeEntity>> call({bool? fromCache = false}) =>
+  _i6.Future<List<_i7.MemeEntity>> call({bool? fromCache = false}) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [],
           {#fromCache: fromCache},
         ),
-        returnValue: _i5.Future<List<_i6.MemeEntity>>.value(<_i6.MemeEntity>[]),
-      ) as _i5.Future<List<_i6.MemeEntity>>);
+        returnValue: _i6.Future<List<_i7.MemeEntity>>.value(<_i7.MemeEntity>[]),
+      ) as _i6.Future<List<_i7.MemeEntity>>);
 }
 
 /// A class which mocks [SaveImageUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSaveImageUsecase extends _i1.Mock implements _i7.SaveImageUsecase {
+class MockSaveImageUsecase extends _i1.Mock implements _i8.SaveImageUsecase {
   MockSaveImageUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -102,19 +121,19 @@ class MockSaveImageUsecase extends _i1.Mock implements _i7.SaveImageUsecase {
       ) as _i3.MemeRepositoryImpl);
 
   @override
-  _i5.Future<bool> call(_i8.Uint8List? imageBytes) => (super.noSuchMethod(
+  _i6.Future<bool> call(_i9.Uint8List? imageBytes) => (super.noSuchMethod(
         Invocation.method(
           #call,
           [imageBytes],
         ),
-        returnValue: _i5.Future<bool>.value(false),
-      ) as _i5.Future<bool>);
+        returnValue: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
 }
 
 /// A class which mocks [ShareImageUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockShareImageUsecase extends _i1.Mock implements _i9.ShareImageUsecase {
+class MockShareImageUsecase extends _i1.Mock implements _i10.ShareImageUsecase {
   MockShareImageUsecase() {
     _i1.throwOnMissingStub(this);
   }
@@ -129,12 +148,68 @@ class MockShareImageUsecase extends _i1.Mock implements _i9.ShareImageUsecase {
       ) as _i3.MemeRepositoryImpl);
 
   @override
-  _i5.Future<void> call(_i8.Uint8List? imageBytes) => (super.noSuchMethod(
+  _i6.Future<void> call(_i9.Uint8List? imageBytes) => (super.noSuchMethod(
         Invocation.method(
           #call,
           [imageBytes],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [ThemeUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockThemeUseCase extends _i1.Mock implements _i11.ThemeUseCase {
+  MockThemeUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.ThemeRepository get repository => (super.noSuchMethod(
+        Invocation.getter(#repository),
+        returnValue: _FakeThemeRepository_2(
+          this,
+          Invocation.getter(#repository),
+        ),
+      ) as _i4.ThemeRepository);
+
+  @override
+  _i6.Future<_i12.AppTheme> getSavedTheme() => (super.noSuchMethod(
+        Invocation.method(
+          #getSavedTheme,
+          [],
+        ),
+        returnValue: _i6.Future<_i12.AppTheme>.value(_i12.AppTheme.light),
+      ) as _i6.Future<_i12.AppTheme>);
+
+  @override
+  _i6.Future<void> saveTheme(_i12.AppTheme? theme) => (super.noSuchMethod(
+        Invocation.method(
+          #saveTheme,
+          [theme],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [RequestStoragePermissionUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockRequestStoragePermissionUseCase extends _i1.Mock
+    implements _i13.RequestStoragePermissionUseCase {
+  MockRequestStoragePermissionUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<bool> call() => (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [],
+        ),
+        returnValue: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
 }

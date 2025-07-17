@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meme_editor_app_offline_first_flutter_application/domain/entities/theme_entity.dart';
@@ -5,7 +7,7 @@ import 'package:meme_editor_app_offline_first_flutter_application/presentation/c
 import 'package:meme_editor_app_offline_first_flutter_application/presentation/detail/detail_page.dart';
 import 'package:meme_editor_app_offline_first_flutter_application/presentation/home/home_provider.dart';
 import 'package:provider/provider.dart';
-import '../../core/di/injection.dart'; // pastikan path benar
+import '../../core/di/injection.dart';
 
 class HomePage extends StatefulWidget {
   final AppDependencies appDependencies;
@@ -92,6 +94,22 @@ class _HomePageState extends State<HomePage> {
                     itemCount: prov.memes.length,
                     itemBuilder: (context, index) {
                       final meme = prov.memes[index];
+                      final imageWidget = prov.isOffline
+                          ? Image(
+                              image: FileImage(File(meme.url)),
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Center(child: Icon(Icons.broken_image)),
+                            )
+                          : CachedNetworkImage(
+                              imageUrl: meme.url,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  const Center(child: Icon(Icons.broken_image)),
+                            );
+
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -99,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(
                               builder: (_) => DetailPage(
                                 imageUrl: meme.url,
+                                isOffline: prov.isOffline,
                                 appDependencies: widget.appDependencies,
                               ),
                             ),
@@ -106,14 +125,7 @@ class _HomePageState extends State<HomePage> {
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: CachedNetworkImage(
-                            imageUrl: meme.url,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => const Center(
-                                child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                const Center(child: Icon(Icons.broken_image)),
-                          ),
+                          child: imageWidget,
                         ),
                       );
                     },

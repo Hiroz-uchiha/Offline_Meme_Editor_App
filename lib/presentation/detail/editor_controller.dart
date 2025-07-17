@@ -27,7 +27,6 @@ class EditorController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Tambahan untuk update content teks (misalnya edit teks)
   void updateItemContent(int index, String newContent) {
     _saveState();
     final oldItem = _items[index];

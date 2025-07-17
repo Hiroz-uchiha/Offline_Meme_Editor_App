@@ -39,11 +39,7 @@ class ExportController extends ChangeNotifier {
         ),
       );
     } catch (e) {
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Terjadi kesalahan saat menyimpan gambar')),
-      );
+      print('exportToGallery error: $e');
     }
   }
 
@@ -51,7 +47,7 @@ class ExportController extends ChangeNotifier {
     try {
       await shareImage(imageBytes);
     } catch (e) {
-      // Kalau mau, bisa kasih feedback error di sini
+      print(e);
     }
   }
 }

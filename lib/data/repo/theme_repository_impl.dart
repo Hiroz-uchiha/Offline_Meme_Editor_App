@@ -3,7 +3,6 @@ import 'package:meme_editor_app_offline_first_flutter_application/domain/entitie
 import 'package:meme_editor_app_offline_first_flutter_application/domain/repo/theme_repository.dart';
 
 class ThemeRepositoryImpl implements ThemeRepository {
-  static const _boxName = 'settings';
   static const _keyTheme = 'app_theme';
 
   final Box _box;

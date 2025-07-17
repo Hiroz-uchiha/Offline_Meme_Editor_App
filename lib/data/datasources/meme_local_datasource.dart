@@ -26,8 +26,13 @@ class MemeLocalDatasource {
   }
 
   Future<bool> saveToGallery(Uint8List imageBytes) async {
-    final status = await Permission.storage.request();
-    if (!status.isGranted) return false;
+    final photosStatus = await Permission.photos.request();
+    final storageStatus = await Permission.storage.request();
+
+    if (!photosStatus.isGranted && !storageStatus.isGranted) {
+      print("Permission denied");
+      return false;
+    }
 
     try {
       final fileName =
@@ -44,6 +49,7 @@ class MemeLocalDatasource {
       } else {
         print("Failed to save image: ${result.errorMessage}");
       }
+
       return result.isSuccess;
     } catch (e) {
       print("Exception saving image: $e");

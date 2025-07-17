@@ -34,7 +34,11 @@ flutter pub get
 
 ### 3. Generate Necessary Files
 This project uses build_runner to generate:
+```bash
+flutter pub run build_runner build
+```
 
-Hive type adapters for local caching
-
-Mockito mocks for unit testing
+### 4. Run the App
+```bash
+flutter run
+```

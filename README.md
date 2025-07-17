@@ -1,16 +1,36 @@
-# meme_editor_app_offline_first_flutter_application
+# 🖼️ Offline Meme Editor
 
-A new Flutter project.
+A Flutter application to create, edit, and save memes offline using clean architecture. Includes offline-first support with Hive for local storage, and Dio for remote API access.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✅ Requirements
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK ≥ 3.x
+- Dart SDK
+- Android Studio, VS Code, or any Flutter-compatible IDE
+- A connected Android device or emulator
+- Internet access to fetch meme templates (only needed once)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+> ✅ This app targets **Android API level 35 (Android 14)**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 📦 Dependencies Used
+
+- `flutter_bloc` – state management
+- `hive` + `hive_flutter` – local offline storage
+- `dio` – HTTP client
+- `build_runner` – code generation
+- `permission_handler`, `saver_gallery` – storage access
+- `path_provider`, `share_plus` – file handling & sharing
+
+---
+
+## 🔧 Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Dustymon111/offline-meme-editor.git
+cd offline-meme-editor

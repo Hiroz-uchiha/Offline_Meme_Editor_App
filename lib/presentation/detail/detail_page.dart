@@ -13,12 +13,16 @@ class DetailPage extends StatefulWidget {
   final String imageUrl;
   final bool isOffline;
   final AppDependencies appDependencies;
+  final String name;
+  final int captions;
 
   const DetailPage({
     super.key,
     required this.imageUrl,
     required this.isOffline,
     required this.appDependencies,
+    required this.name,
+    required this.captions,
   });
 
   @override
@@ -115,17 +119,19 @@ class _DetailPageState extends State<DetailPage> {
                         editIndex: index,
                       );
                     },
+                    name: widget.name,
+                    captions: widget.captions,
                   ),
                 ),
               ),
+
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.upload),
                   label: const Text("Export"),
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   ),
                   onPressed: () async {
                     final imageBytes = await captureImage();

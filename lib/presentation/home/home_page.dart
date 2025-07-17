@@ -119,6 +119,8 @@ class _HomePageState extends State<HomePage> {
                                 imageUrl: meme.url,
                                 isOffline: prov.isOffline,
                                 appDependencies: widget.appDependencies,
+                                name: meme.name,
+                                captions: meme.captions,
                               ),
                             ),
                           );
